@@ -48,7 +48,7 @@ def callback_dispatcher(bot: Bot, update: Update):
             caption = update.callback_query['message']['reply_to_message']['caption']
             bot.answer_callback_query(
                 callback_query_id=update.callback_query.id, text="正在发送~")
-            bot.send_photo(chat_id=CHANNEL, photo=file_id,
+            bot.send_photo(chat_id=CHANNEL, photo=file_id, caption=caption, 
                            reply_markup=like_buttons(0, 0))
             bot.edit_message_text("已发送。", chat_id, message_id)
         else:
