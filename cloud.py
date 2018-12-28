@@ -7,6 +7,9 @@ logging.basicConfig(level=logging.DEBUG)
 
 leancloud.init(LEAN_APPKEY, LEAN_APPSEC)
 
+print(LEAN_APPKEY)
+print(LEAN_APPSEC)
+
 leancloud.use_region('US')
 
 def check_feedback(chat_id, message_id, user_id, data):
