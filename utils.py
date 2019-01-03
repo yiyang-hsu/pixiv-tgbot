@@ -1,5 +1,5 @@
 from telegram import Bot, Update, ChatAction, InlineKeyboardMarkup, InlineKeyboardButton
-from cloud import get_feedback, check_feedback
+from cloud import get_feedback, check_feedback, add_user, log_contributions
 from creadcials import CHANNEL
 
 
@@ -33,10 +33,12 @@ def callback_dispatcher(bot: Bot, update: Update):
     call_data = update.callback_query['data'].split('/')
     chat_id = update.callback_query['message']['chat']['id']
     message_id = update.callback_query['message']['message_id']
-    user_id = update.callback_query.from_user.id
+    cur_user = update.callback_query.from_user
+    add_user(cur_user.id, cur_user.username,
+             cur_user.first_name + ' ' + cur_user.last_name)
     if call_data[0] == 'pic':
         feedback_text = check_feedback(
-            chat_id, message_id, user_id, call_data[1])
+            chat_id, message_id, cur_user.id, call_data[1])
         likes, dislikes = get_feedback(chat_id, message_id)
         bot.answer_callback_query(
             callback_query_id=update.callback_query.id, text=feedback_text)
@@ -48,9 +50,10 @@ def callback_dispatcher(bot: Bot, update: Update):
             caption = update.callback_query['message']['reply_to_message']['caption']
             bot.answer_callback_query(
                 callback_query_id=update.callback_query.id, text="正在发送~")
-            bot.send_photo(chat_id=CHANNEL, photo=file_id, caption=caption, 
+            bot.send_photo(chat_id=CHANNEL, photo=file_id, caption=caption,
                            reply_markup=like_buttons(0, 0))
             bot.edit_message_text("已发送。", chat_id, message_id)
+            log_contributions(cur_user.id, 1, 'content')
         else:
             bot.answer_callback_query(
                 callback_query_id=update.callback_query.id, text="正在取消~")

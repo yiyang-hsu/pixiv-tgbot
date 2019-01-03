@@ -7,6 +7,7 @@ UPDATER = Updater(BOT_TOKEN)
 
 # Dispatch and add jobs
 UPDATER.dispatcher.add_handler(CommandHandler('start', commands.start))
+UPDATER.dispatcher.add_handler(CommandHandler('board', commands.contributors))
 
 UPDATER.dispatcher.add_handler(MessageHandler(Filters.photo, utils.post_photos))
 # Tasks
