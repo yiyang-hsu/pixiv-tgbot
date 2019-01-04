@@ -93,5 +93,5 @@ def get_user(user_id):
         return None
 
 def get_users():
-    query_string = "select * from Users limit 10"
+    query_string = "select * from Users limit 10 order by user_contrib desc"
     return leancloud.Query.do_cloud_query(query_string).results
