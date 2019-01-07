@@ -89,8 +89,9 @@ def pixiv_download(pixiv_id, api):
 
         try:
             file = open(local_url, 'rb')
+            file = local_url
         except:
             api.download(url, path='/tmp/')
-            file = open(local_url, 'rb')
+            file = local_url
 
     return file, title, tags, artist
