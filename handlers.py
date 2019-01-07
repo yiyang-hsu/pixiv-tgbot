@@ -20,6 +20,8 @@ def entity_handler(bot: Bot, update: Update):
     text = update['message']['text']
     entities = update['message']['entities']
 
+    bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
+
     tags = []
     url = file = ''
     for entity in entities:
@@ -35,11 +37,10 @@ def entity_handler(bot: Bot, update: Update):
     for tag in tags:
         caption += '#{} '.format(tag)
     caption += "[Link]({})".format(url)
-
     sent_message = bot.send_photo(
-        chat_id=chat_id, photo=file, caption=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id)
+       chat_id=chat_id, photo=open(file, 'rb'), caption=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id)
     # sent_message = bot.send_message(
-    #     chat_id=chat_id, text=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id)
+    #    chat_id=chat_id, text=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id)
 
     bot.send_message(chat_id=chat_id, text="您想要发送这张图片吗？", reply_to_message_id=sent_message['message_id'],
                      reply_markup=InlineKeyboardMarkup(buttons))
