@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9bdbbab5e50b3e2c3da58b29c1b20798bc63aed637f71cc00275fc0ad95698cf"
+            "sha256": "f7ec2f306c33471b7470cc590ea6340ac94f1eac4f4531b30d1d9e89d801ea53"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -129,6 +129,14 @@
                 "sha256:19abc2ac8d8ac538409db6def58259d190e92535b0b17382e6e6b491ab9b33bf"
             ],
             "version": "==2.1.8"
+        },
+        "pixivpy": {
+            "hashes": [
+                "sha256:1ce8a76a6ae9e6c0ebe2a2fd4eae7d5513ddfee6c8bbf5d22d4ffed97115681c",
+                "sha256:c82b551b26bffa825351ff63870b390016109ebdcdb5e02b4b303766361feb6b",
+                "sha256:efcbdfc6938233cc8cc83fa4f015c8919fe6bda347eac85cb49fa44b8629e6c3"
+            ],
+            "version": "==3.3.5"
         },
         "pycparser": {
             "hashes": [
