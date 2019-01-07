@@ -2,7 +2,6 @@ from telegram import Bot, Update, ChatAction, InlineKeyboardMarkup, InlineKeyboa
 from cloud import get_feedback, check_feedback, add_user, log_contributions
 from creadcials import CHANNEL
 
-
 def build_menu(buttons,
                n_cols,
                header_buttons=None,
@@ -14,20 +13,12 @@ def build_menu(buttons,
         menu.append(footer_buttons)
     return menu[0]
 
-
-def post_photos(bot: Bot, update: Update):
-    buttons = build_menu([InlineKeyboardButton('是', callback_data='post/1'),
-                          InlineKeyboardButton('否', callback_data='post/0')], n_cols=2)
-
-    message_id = update['message']['message_id']
-    chat_id = update['message']['chat']['id']
-    bot.send_message(chat_id=chat_id, text="您想要发送这张图片吗？", reply_to_message_id=message_id,
-                     reply_markup=InlineKeyboardMarkup(buttons))
-
-
 def like_buttons(likes, dislikes):
     return InlineKeyboardMarkup(build_menu([InlineKeyboardButton('❤️ {}'.format(str(likes)), callback_data='pic/1'), InlineKeyboardButton('😶 {}'.format(str(dislikes)), callback_data='pic/0')], n_cols=2))
 
+def confirm_buttons():
+    return build_menu([InlineKeyboardButton('是', callback_data='post/1'),
+                          InlineKeyboardButton('否', callback_data='post/0')], n_cols=2)
 
 def callback_dispatcher(bot: Bot, update: Update):
     call_data = update.callback_query['data'].split('/')

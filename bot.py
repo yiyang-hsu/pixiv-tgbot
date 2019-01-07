@@ -1,6 +1,9 @@
-import utils, commands, datetime
+import utils
+import commands
+import datetime
+import handlers
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
-from creadcials import BOT_TOKEN
+from creadcials import BOT_TOKEN, PIXIV_PASSWORD, PIXIV_USERNAME
 
 # Connect to the bot
 UPDATER = Updater(BOT_TOKEN)
@@ -9,7 +12,10 @@ UPDATER = Updater(BOT_TOKEN)
 UPDATER.dispatcher.add_handler(CommandHandler('start', commands.start))
 UPDATER.dispatcher.add_handler(CommandHandler('board', commands.contributors))
 
-UPDATER.dispatcher.add_handler(MessageHandler(Filters.photo, utils.post_photos))
+UPDATER.dispatcher.add_handler(MessageHandler(
+    Filters.photo, handlers.photo_handler))
+UPDATER.dispatcher.add_handler(MessageHandler(
+    Filters.entity, handlers.entity_handler))
 # Tasks
 # updater.job_queue.run_daily(tasks.daily_sch, time=datetime.time(0, 0, 0), name='daily')
 
