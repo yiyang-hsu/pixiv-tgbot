@@ -1,4 +1,4 @@
-from utils import confirm_buttons
+from utils import confirm_buttons, get_image_info
 from telegram import Bot, Update, ChatAction, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 
 
@@ -21,23 +21,25 @@ def entity_handler(bot: Bot, update: Update):
     entities = update['message']['entities']
 
     tags = []
-    url = image_url = ''
+    url = file = ''
     for entity in entities:
         entity_text = text[entity['offset']:entity['offset']+entity['length']]
         if entity['type'] == 'url':
             url = entity_text
-            image_url = entity_text
-        elif entity['type'] == 'hashtag':
-            tags.append(entity_text)
+            file, title, tags, artist = get_image_info(entity_text)
 
-    if url == '' or image_url == '':
+    if file == -1:
         return
 
-    caption = '[Link]({})'.format(url)
+    caption = '*{}* \nby {}\n'.format(title, artist)
     for tag in tags:
-        caption += ' {}'.format(tag)
+        caption += '#{} '.format(tag)
+    caption += "[Link]({})".format(url)
 
-    sent_message = bot.send_message(
-        chat_id=chat_id, text=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id)
-    bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=sent_message['message_id'],
+    sent_message = bot.send_photo(
+        chat_id=chat_id, photo=file, caption=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id)
+    # sent_message = bot.send_message(
+    #     chat_id=chat_id, text=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id)
+
+    bot.send_message(chat_id=chat_id, text="您想要发送这张图片吗？", reply_to_message_id=sent_message['message_id'],
                      reply_markup=InlineKeyboardMarkup(buttons))
