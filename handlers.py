@@ -47,14 +47,12 @@ def entity_handler(bot: Bot, update: Update):
         bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=sent_message['message_id'],
                          reply_markup=InlineKeyboardMarkup(buttons))
     else:
-        # sent_message = bot.send_photo(
-            # chat_id=chat_id, photo=open(images['file'][0], 'rb'), caption=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id, timeout=40)
         if count > 10:
             return
-        print('here!')
-        sent_message = bot.send_media_group(
-            chat_id=chat_id, media=[InputMediaPhoto(open(file, 'rb'), caption='({}/{}) '.format(images['files'].index(file), count) + caption, parse_mode=ParseMode.MARKDOWN) for file in images['files']], reply_to_message_id=message_id, timeout=600)
-        bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=sent_message['message_id'],
-                         reply_markup=InlineKeyboardMarkup(buttons))
+        sent_messages = bot.send_media_group(
+            chat_id=chat_id, media=[InputMediaPhoto(open(file, 'rb'), caption='({}/{}) '.format(images['files'].index(file) + 1, count) + caption, parse_mode=ParseMode.MARKDOWN) for file in images['files']], reply_to_message_id=message_id, timeout=600)
+        for sent_message in sent_messages:
+            bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=sent_message['message_id'],
+                         reply_markup=InlineKeyboardMarkup(buttons), timeout=600)
         for file in images['files']:
             remove(file)
