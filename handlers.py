@@ -1,13 +1,13 @@
 from utils import confirm_buttons, get_image_info
-from telegram import Bot, Update, ChatAction, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-
+from telegram import Bot, Update, ChatAction, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
+from os import remove
 
 def photo_handler(bot: Bot, update: Update):
     buttons = confirm_buttons()
 
     message_id = update['message']['message_id']
     chat_id = update['message']['chat']['id']
-    bot.send_message(chat_id=chat_id, text="您想要发送这张图片吗？", reply_to_message_id=message_id,
+    bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=message_id,
                      reply_markup=InlineKeyboardMarkup(buttons))
 
 
@@ -28,19 +28,33 @@ def entity_handler(bot: Bot, update: Update):
         entity_text = text[entity['offset']:entity['offset']+entity['length']]
         if entity['type'] == 'url':
             url = entity_text
-            file, title, tags, artist = get_image_info(entity_text)
+            images = get_image_info(entity_text)
 
-    if file == -1:
+    print(images)
+
+    if images == {}:
         return
 
-    caption = '*{}* \nby {}\n'.format(title, artist)
-    for tag in tags:
+    caption = '*{}* \n作者: {}\n'.format(images['title'], images['artist'])
+    for tag in images['tags']:
         caption += '#{} '.format(tag)
-    caption += "[Link]({})".format(url)
-    sent_message = bot.send_photo(
-       chat_id=chat_id, photo=open(file, 'rb'), caption=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id)
-    # sent_message = bot.send_message(
-    #    chat_id=chat_id, text=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id)
+    caption += "[链接]({})".format(images['url'])
+    count = len(images['files'])
+    if count == 1:
+        sent_message = bot.send_photo(
+            chat_id=chat_id, photo=open(images['files'][0], 'rb'), caption=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id, timeout=40)
 
-    bot.send_message(chat_id=chat_id, text="您想要发送这张图片吗？", reply_to_message_id=sent_message['message_id'],
-                     reply_markup=InlineKeyboardMarkup(buttons))
+        bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=sent_message['message_id'],
+                         reply_markup=InlineKeyboardMarkup(buttons))
+    else:
+        # sent_message = bot.send_photo(
+            # chat_id=chat_id, photo=open(images['file'][0], 'rb'), caption=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id, timeout=40)
+        if count > 10:
+            return
+        print('here!')
+        sent_message = bot.send_media_group(
+            chat_id=chat_id, media=[InputMediaPhoto(open(file, 'rb'), caption='({}/{}) '.format(images['files'].index(file), count) + caption, parse_mode=ParseMode.MARKDOWN) for file in images['files']], reply_to_message_id=message_id, timeout=600)
+        bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=sent_message['message_id'],
+                         reply_markup=InlineKeyboardMarkup(buttons))
+        for file in images['files']:
+            remove(file)
