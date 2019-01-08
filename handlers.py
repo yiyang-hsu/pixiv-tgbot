@@ -1,6 +1,7 @@
-from utils import confirm_buttons, get_image_info
+from utils import confirm_buttons, get_image_info, build_menu
 from telegram import Bot, Update, ChatAction, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 from os import remove
+
 
 def photo_handler(bot: Bot, update: Update):
     buttons = confirm_buttons()
@@ -47,12 +48,15 @@ def entity_handler(bot: Bot, update: Update):
         bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=sent_message['message_id'],
                          reply_markup=InlineKeyboardMarkup(buttons))
     else:
-        if count > 10:
-            return
-        sent_messages = bot.send_media_group(
-            chat_id=chat_id, media=[InputMediaPhoto(open(file, 'rb'), caption='({}/{}) '.format(images['files'].index(file) + 1, count) + caption, parse_mode=ParseMode.MARKDOWN) for file in images['files']], reply_to_message_id=message_id, timeout=600)
+        current = 0
+        groups = build_menu(images['files'], n_cols=10)
+        sent_messages = []
+        for group in groups:
+            sent_messages += bot.send_media_group(
+                chat_id=chat_id, media=[InputMediaPhoto(open(file, 'rb'), caption='({}/{}) '.format(images['files'].index(file) + 1, count) + caption, parse_mode=ParseMode.MARKDOWN) for file in group], reply_to_message_id=message_id, timeout=600)
+
         for sent_message in sent_messages:
             bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=sent_message['message_id'],
-                         reply_markup=InlineKeyboardMarkup(buttons), timeout=600)
+                             reply_markup=InlineKeyboardMarkup(buttons), timeout=600)
         for file in images['files']:
             remove(file)
