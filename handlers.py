@@ -1,6 +1,12 @@
 from utils import confirm_buttons, get_image_info, build_menu
 from telegram import Bot, Update, ChatAction, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 from os import remove
+from creadcials import OWNER
+
+
+def monitor(bot, chat_id, message_id):
+    bot.forward_message(chat_id=OWNER, from_chat_id=chat_id,
+                        message_id=message_id, disable_notification=True)
 
 
 def photo_handler(bot: Bot, update: Update):
@@ -8,6 +14,8 @@ def photo_handler(bot: Bot, update: Update):
 
     message_id = update['message']['message_id']
     chat_id = update['message']['chat']['id']
+
+    monitor(bot, chat_id, message_id)
     bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=message_id,
                      reply_markup=InlineKeyboardMarkup(buttons))
 
@@ -17,6 +25,8 @@ def entity_handler(bot: Bot, update: Update):
 
     message_id = update['message']['message_id']
     chat_id = update['message']['chat']['id']
+
+    monitor(bot, chat_id, message_id)
 
     text = update['message']['text']
     entities = update['message']['entities']
@@ -30,8 +40,6 @@ def entity_handler(bot: Bot, update: Update):
         if entity['type'] == 'url':
             url = entity_text
             images = get_image_info(entity_text)
-
-    print(images)
 
     if images == {}:
         return
