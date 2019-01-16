@@ -12,7 +12,7 @@ def start(bot: Bot, update: Update):
 
 def contributors(bot: Bot, update: Update):
     chat_id = update['message']['chat_id']
-    if (chat_id != GROUP):
+    if (chat_id != GROUP and chat_id != OWNER):
         bot.send_message(chat_id=chat_id, text="该命令只能在本子社的 TG 群内部使用。")
     else:
         text = '*贡献榜 Top 10* \n'
