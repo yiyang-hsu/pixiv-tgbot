@@ -3,7 +3,7 @@ from pixivpy3 import AppPixivAPI
 from creadcials import PIXIV_PASSWORD, PIXIV_USERNAME, OWNER
 
 def debug(bot, obj):
-    bot.send_message(chat_id=OWNER, text="[STATUS] {}".format(obj),
+    bot.send_message(chat_id=OWNER, text="`[status]` {}".format(obj),
                      disable_notification=True, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 
