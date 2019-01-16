@@ -15,7 +15,7 @@ def photo_handler(bot: Bot, update: Update):
     message_id = update['message']['message_id']
     chat_id = update['message']['chat']['id']
 
-    monitor(bot, chat_id, message_id)
+    # monitor(bot, chat_id, message_id)
     bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=message_id,
                      reply_markup=InlineKeyboardMarkup(buttons))
 
@@ -26,7 +26,7 @@ def entity_handler(bot: Bot, update: Update):
     message_id = update['message']['message_id']
     chat_id = update['message']['chat']['id']
 
-    monitor(bot, chat_id, message_id)
+    # monitor(bot, chat_id, message_id)
 
     text = update['message']['text']
     entities = update['message']['entities']

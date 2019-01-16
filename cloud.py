@@ -7,6 +7,17 @@ leancloud.init(LEAN_APPKEY, LEAN_APPSEC)
 
 leancloud.use_region('US')
 
+def init_message(chat_id, message_id, from_user_id):
+    feedback = [[], []]
+    log_contributions(from_user_id, 1, "content")
+    Message = leancloud.Object.extend('Message')
+    message = Message()
+    message.set('chat_id', chat_id)
+    message.set('message_id', message_id)
+    message.set('from', from_user_id)
+    message.set('feedback', feedback)
+    message.save()
+
 
 def check_feedback(chat_id, message_id, user_id, data):
     data = 1 if data == '1' else 0
