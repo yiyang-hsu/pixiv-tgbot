@@ -93,6 +93,20 @@ def add_user(user_id, user_name, user_nick,):
         user.save()
         return user
 
+def if_blocked(user_id):
+    query_string = "select * from Blacklist where id={} limit 1".format(
+        user_id)
+    results = leancloud.Query.do_cloud_query(query_string).results
+    if (len(results)):
+        return True
+    else:
+        return None
+
+def block_user(user_id):
+    Hacker = leancloud.Object.extend('Blacklist')
+    hacker = Hacker()
+    hacker.set('id', user_id)
+    hacker.save()
 
 def get_user(user_id):
     query_string = "select * from Users where user_id={} limit 1".format(
