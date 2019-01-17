@@ -7,8 +7,11 @@ def start(bot: Bot, update: Update):
     chat_id = update['message']['chat_id']
     bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
     bot.send_message(chat_id=chat_id, text="本子社的机器人~")
-    bot.send_message(chat_id=chat_id, text="向我发送一张图片，我会附上两个反馈按钮发送到附带的 Channel，并且不会显示是谁发的。不过如果有谁做坏事，我就把他拉黑！")
-    bot.send_message(chat_id=chat_id, text="现在支持直接分享给我来自 Pixiv 的链接来发送多张图片，但是暂不支持动图。")
+    bot.send_message(chat_id=chat_id, text="""1. 向我发送一张图片，我会附上两个反馈按钮发送到 Channel 。
+2. 向我发送一个来自 Pixiv 链接，我会提取标签和链接发送到 Channel 。
+3. 放心，发送之前都会要求你确认。
+4. 实现了黑名单。
+5. 并且整个 Bot 是 Serverless 的。""")
 
 def contributors(bot: Bot, update: Update):
     chat_id = update['message']['chat_id']
