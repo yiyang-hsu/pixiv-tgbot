@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f7ec2f306c33471b7470cc590ea6340ac94f1eac4f4531b30d1d9e89d801ea53"
+            "sha256": "1caee447f55a31b4b5983d1c668f1ab5e2a7b2273d68210d1d3dde12c9c325a5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -17,9 +17,9 @@
     "default": {
         "arrow": {
             "hashes": [
-                "sha256:a558d3b7b6ce7ffc74206a86c147052de23d3d4ef0e17c210dd478c53575c4cd"
+                "sha256:9cb4a910256ed536751cd5728673bfb53e6f0026e240466f90c2a92c0b79c895"
             ],
-            "version": "==0.12.1"
+            "version": "==0.13.0"
         },
         "asn1crypto": {
             "hashes": [
@@ -108,6 +108,12 @@
                 "sha256:67045236dcfd6816dc439556d009594abf643e5eb48992e36beac09c2ca659b8"
             ],
             "version": "==0.17.1"
+        },
+        "googletrans": {
+            "hashes": [
+                "sha256:bb4e2a6ee72a24870e696a14238b7305f855a05206ecae10bd50052651984cc5"
+            ],
+            "version": "==2.4.0"
         },
         "idna": {
             "hashes": [
