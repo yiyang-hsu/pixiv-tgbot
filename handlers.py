@@ -2,7 +2,7 @@ from utils import confirm_buttons, get_image_info, build_menu
 from telegram import Bot, Update, ChatAction, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 from os import remove
 from creadcials import OWNER
-
+from googletrans import Translator
 
 def monitor(bot, chat_id, message_id):
     bot.forward_message(chat_id=OWNER, from_chat_id=chat_id,
@@ -22,6 +22,7 @@ def photo_handler(bot: Bot, update: Update):
 
 def entity_handler(bot: Bot, update: Update):
     buttons = confirm_buttons()
+    translator = Translator()
 
     message_id = update['message']['message_id']
     chat_id = update['message']['chat']['id']
@@ -46,6 +47,11 @@ def entity_handler(bot: Bot, update: Update):
 
     caption = '*{}* \n作者: {}\n'.format(images['title'], images['artist'])
     for tag in images['tags']:
+        tag = translator.translate(tag, dest='zh-cn').text
+        if (tag == '翔太'):
+            tag = '正太'
+        elif (tag in ("R-18", "R-18G")):
+            tag = 'NSFW'
         caption += '#{} '.format(tag)
     caption += "[链接]({})".format(images['url'])
     count = len(images['files'])
