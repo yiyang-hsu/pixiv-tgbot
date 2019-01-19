@@ -73,4 +73,4 @@ def pixiv_download(pixiv_id, api):
             api.download(url, path='/tmp/')
             files.append(local_url)
 
-    return {'files': files, 'title': title, 'tags': ['pixiv'] + tags, 'artist': artist, 'url': 'https://pixiv.net/i/{}'.format(pixiv_id)}
+    return {'files': files, 'title': title, 'tags': tags, 'artist': artist, 'url': 'https://pixiv.net/i/{}'.format(pixiv_id)}
