@@ -10,6 +10,7 @@ def monitor(bot, chat_id, message_id):
     bot.forward_message(chat_id=OWNER, from_chat_id=chat_id,
                         message_id=message_id, disable_notification=True)
 
+
 def filter(bot, chat_id):
     if (chat_id in WHITELIST):
         return True
@@ -18,8 +19,9 @@ def filter(bot, chat_id):
             chat_id=chat_id, text="_Sorry but you have been banned._", parse_mode=ParseMode.MARKDOWN)
         return False
 
+
 def photo_handler(bot: Bot, update: Update):
-    
+
     buttons = confirm_buttons()
 
     message_id = update['message']['message_id']
@@ -35,9 +37,32 @@ def photo_handler(bot: Bot, update: Update):
                      reply_markup=InlineKeyboardMarkup(buttons))
 
 
+def tags_handler(tags):
+    tags_text = ''
+    translator = Translator()
+    translations = translator.translate(tags, dest='zh-cn')
+    tags = []
+    for translation in translations:
+        tag = translation.text
+        tag.replace("-", '_')
+        tag.replace(" ", '_')
+        if ('0用户' in tag):
+            continue
+        elif (tag == '翔太'):
+            tag = '正太'
+        elif (tag == '智人'):
+            tag = 'Homo'
+        elif ('同性恋' in tag):
+            tag = 'Gay'
+        tags.append(tag)
+    tags = list(set(tags))
+    for tag in tags:
+        tags_text += '#{} '.format(tag)
+    return tags_text
+
+
 def entity_handler(bot: Bot, update: Update):
     buttons = confirm_buttons()
-    translator = Translator()
 
     message_id = update['message']['message_id']
     chat_id = update['message']['chat']['id']
@@ -66,14 +91,8 @@ def entity_handler(bot: Bot, update: Update):
         return
 
     caption = '*{}* \n作者: {}\n'.format(images['title'], images['artist'])
-    for tag in images['tags']:
-        tag = translator.translate(tag, dest='zh-cn').text
-        if (tag == '翔太'):
-            tag = '正太'
-        elif (tag in ("R-18", "R-18G")):
-            tag = 'NSFW'
-        caption += '#{} '.format(tag)
-    caption += "[链接]({})".format(images['url'])
+    caption += tags_handler(images['tags'])
+    caption += "\n[链接: {}]({})".format(images['url'], images['url'])
     count = len(images['files'])
     if count == 1:
         sent_message = bot.send_photo(
