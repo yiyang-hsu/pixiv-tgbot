@@ -44,14 +44,16 @@ def tags_handler(tags):
     tags = []
     for translation in translations:
         tag = translation.text
-        tag.replace("-", '_')
-        tag.replace(" ", '_')
-        if ('0用户' in tag):
+        tag = tag.replace('-', '')
+        tag = tag.replace(' ', '')
+        if ('0个用户' in tag or '0用户' in tag):
             continue
         elif (tag == '翔太'):
             tag = '正太'
         elif (tag == '智人'):
             tag = 'Homo'
+        elif (tag == '一座桥'):
+            tag = '屁股'
         elif ('同性恋' in tag):
             tag = 'Gay'
         tags.append(tag)
@@ -91,8 +93,10 @@ def entity_handler(bot: Bot, update: Update):
         return
 
     caption = '*{}* \n作者: {}\n'.format(images['title'], images['artist'])
+    print(images['tags'])
     caption += tags_handler(images['tags'])
-    caption += "\n[链接: {}]({})".format(images['url'], images['url'])
+    print(caption)
+    caption += "\n[链接]({})".format(images['url'])
     count = len(images['files'])
     if count == 1:
         sent_message = bot.send_photo(
