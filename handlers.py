@@ -59,6 +59,7 @@ def tags_handler(tags):
     #     tags.append(tag)
     # tags = list(set(tags))
     for tag in tags:
+        tag.replace('-', '_')
         tags_text += '#{} '.format(tag)
     return tags_text
 
@@ -96,7 +97,7 @@ def entity_handler(bot: Bot, update: Update):
     print(images['tags'])
     caption += tags_handler(images['tags'])
     print(caption)
-    caption += "\n[链接]({})".format(images['url'])
+    caption += "\n{}".format(images['url'][8::])
     count = len(images['files'])
     if count == 1:
         sent_message = bot.send_photo(
