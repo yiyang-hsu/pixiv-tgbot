@@ -24,8 +24,8 @@ def like_buttons(likes, dislikes):
 
 
 def confirm_buttons():
-    return build_menu([InlineKeyboardButton('是', callback_data='post/1'),
-                       InlineKeyboardButton('否', callback_data='post/0')], n_cols=2)
+    return build_menu([InlineKeyboardButton('是 / Yes', callback_data='post/1'),
+                       InlineKeyboardButton('否 / No', callback_data='post/0')], n_cols=2)
 
 
 def get_image_info(url: str):
