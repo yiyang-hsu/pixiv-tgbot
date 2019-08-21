@@ -59,7 +59,7 @@ def tags_handler(tags):
     #     tags.append(tag)
     # tags = list(set(tags))
     for tag in tags:
-        tag = tag.replace('-', '_')
+        tag = tag.replace('-', '')
         tags_text += '#{} '.format(tag)
     return tags_text
 
