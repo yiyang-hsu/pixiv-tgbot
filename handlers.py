@@ -33,7 +33,7 @@ def photo_handler(bot: Bot, update: Update):
         return
 
     # monitor(bot, chat_id, message_id)
-    bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=message_id,
+    bot.send_message(chat_id=chat_id, text="您想要发送这个吗？/ Would you like to send this?", reply_to_message_id=message_id,
                      reply_markup=InlineKeyboardMarkup(buttons))
 
 
@@ -103,7 +103,7 @@ def entity_handler(bot: Bot, update: Update):
         sent_message = bot.send_photo(
             chat_id=chat_id, photo=open(images['files'][0], 'rb'), caption=caption, parse_mode=ParseMode.MARKDOWN, reply_to_message_id=message_id, timeout=40)
 
-        bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=sent_message['message_id'],
+        bot.send_message(chat_id=chat_id, text="您想要发送这个吗？/ Would you like to send this?", reply_to_message_id=sent_message['message_id'],
                          reply_markup=InlineKeyboardMarkup(buttons))
     else:
         current = 0
@@ -114,7 +114,7 @@ def entity_handler(bot: Bot, update: Update):
                 chat_id=chat_id, media=[InputMediaPhoto(open(file, 'rb'), caption='({}/{}) '.format(images['files'].index(file) + 1, count) + caption, parse_mode=ParseMode.MARKDOWN) for file in group], reply_to_message_id=message_id, timeout=600)
 
         for sent_message in sent_messages:
-            bot.send_message(chat_id=chat_id, text="您想要发送这个吗？", reply_to_message_id=sent_message['message_id'],
+            bot.send_message(chat_id=chat_id, text="您想要发送这个吗？/ Would you like to send this? ", reply_to_message_id=sent_message['message_id'],
                              reply_markup=InlineKeyboardMarkup(buttons), timeout=600)
         for file in images['files']:
             remove(file)
