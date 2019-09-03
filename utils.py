@@ -2,6 +2,7 @@ from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ParseMode
 from pixivpy3 import AppPixivAPI
 from creadcials import PIXIV_PASSWORD, PIXIV_USERNAME, OWNER
 
+
 def debug(bot, obj):
     bot.send_message(chat_id=OWNER, text="`[status]` {}".format(obj),
                      disable_notification=True, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -33,7 +34,8 @@ def get_image_info(url: str):
         api = AppPixivAPI()
         api.login(PIXIV_USERNAME, PIXIV_PASSWORD)
         if '?' in url:
-            pixiv_id = int(dict(i.split('=') for i in url.split('?')[-1].split('&'))['illust_id'])
+            pixiv_id = int(dict(i.split('=')
+                                for i in url.split('?')[-1].split('&'))['illust_id'])
         else:
             pixiv_id = int(url.split('/')[-1])
         return pixiv_download(pixiv_id, api)
