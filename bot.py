@@ -1,7 +1,8 @@
 import utils
 import commands
 import datetime
-import handlers, callback
+import handlers
+import callback
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
 from creadcials import BOT_TOKEN, PIXIV_PASSWORD, PIXIV_USERNAME
 # Connect to the bot
@@ -19,7 +20,8 @@ UPDATER.dispatcher.add_handler(MessageHandler(
 # updater.job_queue.run_daily(tasks.daily_sch, time=datetime.time(0, 0, 0), name='daily')
 
 # Callback Button
-UPDATER.dispatcher.add_handler(CallbackQueryHandler(callback.callback_dispatcher))
+UPDATER.dispatcher.add_handler(
+    CallbackQueryHandler(callback.callback_dispatcher))
 
 # Start the bot
 UPDATER.start_polling()

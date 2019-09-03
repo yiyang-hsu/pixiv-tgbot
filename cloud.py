@@ -7,6 +7,7 @@ leancloud.init(LEAN_APPKEY, LEAN_APPSEC)
 
 leancloud.use_region('US')
 
+
 def init_message(chat_id, message_id, from_user_id):
     feedback = [[], []]
     log_contributions(from_user_id, 1, "content")
@@ -17,6 +18,15 @@ def init_message(chat_id, message_id, from_user_id):
     message.set('from', from_user_id)
     message.set('feedback', feedback)
     message.save()
+
+
+def add_picture(message_id, file_id, caption):
+    Picture = leancloud.Object.extend('Picture')
+    pic = Picture()
+    pic.set('message_id', message_id)
+    pic.set('file_id', file_id)
+    pic.set('caption', caption)
+    pic.save()
 
 
 def check_feedback(chat_id, message_id, user_id, data):
@@ -79,6 +89,7 @@ def log_contributions(user_id, value, TYPE="feedback"):
     user.set('user_contrib', value * weight[TYPE] + contrib)
     user.save()
 
+
 def add_user(user_id, user_name, user_nick,):
     user = get_user(user_id)
     if (user):
@@ -93,6 +104,7 @@ def add_user(user_id, user_name, user_nick,):
         user.save()
         return user
 
+
 def if_blocked(user_id):
     query_string = "select * from Blacklist where id={} limit 1".format(
         user_id)
@@ -102,11 +114,13 @@ def if_blocked(user_id):
     else:
         return None
 
+
 def block_user(user_id):
     Hacker = leancloud.Object.extend('Blacklist')
     hacker = Hacker()
     hacker.set('id', user_id)
     hacker.save()
+
 
 def get_user(user_id):
     query_string = "select * from Users where user_id={} limit 1".format(
@@ -116,6 +130,7 @@ def get_user(user_id):
         return results[0]
     else:
         return None
+
 
 def get_users():
     query_string = "select * from Users limit 10 order by user_contrib desc"
