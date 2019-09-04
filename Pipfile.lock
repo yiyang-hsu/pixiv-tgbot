@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e3744d95cccd5cd5ef27e7b028a325e45c570fde1192dc0d8d9aa2bab366d99f"
+            "sha256": "485c6ab9b38fe6b76742ad61fbfc4edfbef17a1f2d778e2ae445ef1c25f8fa94"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -184,12 +184,9 @@
             "version": "==2.1.14"
         },
         "pixivpy": {
-            "hashes": [
-                "sha256:59495681c1e97728c4f200deaeff58293b424cf693387ee131a916fc536006f8",
-                "sha256:5a67267569c2f0ecbd099403b7b47d418ff6a8485a633d376ef1963121b94a16",
-                "sha256:e3c9311d7fc5711919ada448861ad38ab22f0dd0fe7b42f60e80906411656e19"
-            ],
-            "version": "==3.3.7"
+            "editable": true,
+            "git": "https://github.com/upbit/pixivpy.git",
+            "ref": "41f4a5832f7c2ba11e232b57b9c6975173d5785e"
         },
         "pycparser": {
             "hashes": [
@@ -341,9 +338,9 @@
         },
         "wrapt": {
             "hashes": [
-                "sha256:565a021fd19419476b9362b05eeaa094178de64f8361e44468f9e9d7843901e1"
+                "sha256:4aea003270831cceb8a90ff27c4031da6ead7ec1886023b80ce0dfe0adf61533"
             ],
-            "version": "==1.11.2"
+            "version": "==1.11.1"
         }
     }
 }
