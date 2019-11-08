@@ -2,7 +2,7 @@ from creadcials import LEAN_APPKEY, LEAN_APPSEC
 import leancloud
 import logging
 
-# logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 leancloud.init(LEAN_APPKEY, LEAN_APPSEC)
 
 leancloud.use_region('US')
@@ -27,6 +27,7 @@ def add_picture(message_id, file_id, caption):
     pic.set('file_id', file_id)
     pic.set('caption', caption)
     pic.save()
+    return pic.id
 
 
 def check_feedback(chat_id, message_id, user_id, data):

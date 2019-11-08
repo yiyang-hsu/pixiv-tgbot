@@ -6,7 +6,7 @@ verify_ssl = true
 python-telegram-bot = "==11.0.0"
 leancloud = "*"
 googletrans = "*"
-pixivpy = {editable = true,git = "https://github.com/upbit/pixivpy.git"}
+pixivpy = {editable = true, git = "https://github.com/upbit/pixivpy.git"}
 
 [dev-packages]
 pylint = "*"
