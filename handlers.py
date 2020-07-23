@@ -1,7 +1,7 @@
 from utils import confirm_buttons, get_image_info, build_menu
 from telegram import Bot, Update, ChatAction, ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 from os import remove
-from creadcials import OWNER, WHITELIST
+from credentials import OWNER, WHITELIST
 from googletrans import Translator
 from cloud import if_blocked
 
@@ -39,25 +39,6 @@ def photo_handler(bot: Bot, update: Update):
 
 def tags_handler(tags):
     tags_text = ''
-    # translator = Translator()
-    # translations = translator.translate(tags, dest='zh-cn')
-    # tags = []
-    # for translation in translations:
-    #     tag = translation.text
-    #     tag = tag.replace('-', '')
-    #     tag = tag.replace(' ', '')
-    #     if ('0个用户' in tag or '0用户' in tag):
-    #         continue
-    #     elif (tag == '翔太'):
-    #         tag = '正太'
-    #     elif (tag == '智人'):
-    #         tag = 'Homo'
-    #     elif (tag == '一座桥'):
-    #         tag = '屁股'
-    #     elif ('同性恋' in tag):
-    #         tag = 'Gay'
-    #     tags.append(tag)
-    # tags = list(set(tags))
     for tag in tags:
         tag = tag.replace('-', '')
         tags_text += '#{} '.format(tag)

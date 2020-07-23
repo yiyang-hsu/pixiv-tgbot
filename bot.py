@@ -4,7 +4,8 @@ import datetime
 import handlers
 import callback
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
-from creadcials import BOT_TOKEN, PIXIV_PASSWORD, PIXIV_USERNAME
+from credentials import BOT_TOKEN, PIXIV_PASSWORD, PIXIV_USERNAME
+
 # Connect to the bot
 UPDATER = Updater(BOT_TOKEN)
 

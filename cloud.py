@@ -1,8 +1,8 @@
-from creadcials import LEAN_APPKEY, LEAN_APPSEC
+from credentials import LEAN_APPKEY, LEAN_APPSEC
 import leancloud
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 leancloud.init(LEAN_APPKEY, LEAN_APPSEC)
 
 leancloud.use_region('US')

@@ -1,5 +1,5 @@
 from telegram import Bot, Update, ChatAction, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
-from creadcials import *
+from credentials import *
 from utils import build_menu, like_buttons
 from cloud import get_users
 
