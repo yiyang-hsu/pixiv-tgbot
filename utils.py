@@ -1,6 +1,6 @@
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ParseMode
 from pixivpy3 import AppPixivAPI
-from creadcials import PIXIV_PASSWORD, PIXIV_USERNAME, OWNER
+from credentials import PIXIV_PASSWORD, PIXIV_USERNAME, OWNER
 
 
 def debug(bot, obj):
